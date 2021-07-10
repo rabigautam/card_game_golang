@@ -1,1 +1,1 @@
-Simple card game written in golang
+Simple card game simulation written in golang
