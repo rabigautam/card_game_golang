@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"io/fs"
 	"io/ioutil"
+	"math/rand"
 	"os"
 	"strings"
+	"time"
 )
 
 //Create new type of deck
@@ -54,4 +56,14 @@ func (cards deck) saveToFile(filename string) error {
 	}
 	fileDataString := strings.SplitAfter(string(fileByte), ",")
 	return	deck(fileDataString)
+}
+func (cards deck)  shuffle() {
+	source := rand.NewSource(time.Now().UnixNano())
+	randomNumber := rand.New(source)
+	
+	for i := range cards{
+
+		newPostion :=randomNumber.Intn(len(cards)-1)
+		cards[i],cards[newPostion]=cards[newPostion],cards[i]    //swapping
+	}
 }
