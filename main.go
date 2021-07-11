@@ -11,6 +11,8 @@ func main() {
 	fmt.Println("above is handCard")
 	remaningDeck.print()	
 	fmt.Println(cards.toString())
-	cards.saveToFile("test go file.js")
+	cards.saveToFile("test go file")
+	readCards:=newDeckFromFile("test go file")
+	readCards.print()
 }
 

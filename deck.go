@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/fs"
 	"io/ioutil"
+	"os"
 	"strings"
 )
 
@@ -31,15 +32,26 @@ func (cards deck) print() { //receiver function
 
 	}
 }
-func deal(cards deck, handSize int) (deck, deck) {               //multiple return
-	return cards[:handSize],cards[handSize:]
-}
-   
-func (cards deck) toString() string{
-	return strings.Join([]string(cards),",")
-		
+func deal(cards deck, handSize int) (deck, deck) { //multiple return
+	return cards[:handSize], cards[handSize:]
 }
 
-func (cards deck) saveToFile(filename string) error{
-return ioutil.WriteFile(filename,[]byte(cards.toString()),fs.ModeAppend.Perm())
+func (cards deck) toString() string {
+	return strings.Join([]string(cards), ",")
+
+}
+
+func (cards deck) saveToFile(filename string) error {
+	return ioutil.WriteFile(filename, []byte(cards.toString()), fs.ModeAppend.Perm())
+}
+ func newDeckFromFile(filename string) deck {
+	fileByte, error := ioutil.ReadFile(filename)
+	if error != nil { //error handleing
+		fmt.Println("Error:", error)
+		// return newDeck()
+		// return
+		os.Exit(1)
+	}
+	fileDataString := strings.SplitAfter(string(fileByte), ",")
+	return	deck(fileDataString)
 }
